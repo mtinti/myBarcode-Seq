@@ -1,0 +1,24 @@
+# Global defaults
+threads: 8
+bin_size: 1
+output_dir: results
+# Set to the annotation GTF you want featureCounts to use
+gtf: /path/to/genome.gtf
+
+# Samples block. Add entries per sample with method, barcodes and bam path.
+# - method: ritSeq (single barcode) or oeSeq (dual barcode)
+# - forward_barcode / reverse_barcode: barcode sequences in forward orientation
+# - merge_forward_reverse: only used for ritSeq (True to merge F and R into F_plus_R)
+samples: #this is the output folder
+  example_rit: ##this is a subfolder of the output folder
+    bam: data/example_rit.bam #this is the path to the input bam file
+    method: ritSeq #this is the method used
+    forward_barcode: GCCTCGCGA #this is the forward barcode sequence
+    reverse_barcode: TCGCGAGGC #this is the reverse barcode sequence
+    merge_forward_reverse: true #whether to merge forward and reverse barcodes
+
+  example_oe:
+    bam: data/example_oe.bam
+    method: oeSeq
+    forward_barcode: GCCTCGCGA
+    reverse_barcode: TCGCGAGGC

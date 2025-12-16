@@ -1,0 +1,13 @@
+name: mybarcode
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - samtools
+  - pysam
+  - biopython
+  - deeptools
+  - subread
+  - tqdm

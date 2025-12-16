@@ -1,0 +1,20 @@
+# Global defaults
+threads: 8
+bin_size: 1
+output_dir: results
+# Set to the annotation GTF you want featureCounts to use
+gtf: data/genome_927/tb927.gtf
+
+# Samples block. Add entries per sample with method, barcodes and bam path.
+# - method: ritSeq (single barcode) or oeSeq (dual barcode)
+# - forward_barcode / reverse_barcode: barcode sequences in forward orientation
+# - merge_forward_reverse: only used for ritSeq (True to merge F and R into F_plus_R)
+#   as the same barcode is given in F and RC orientation
+samples:
+  TbRIT-8166:
+    bam: data/TbRIT-8166/TbRIT-8166.picard.bam
+    method: ritSeq
+    forward_barcode: GCCTCGCGA
+    reverse_barcode: TCGCGAGGC
+    merge_forward_reverse: true
+

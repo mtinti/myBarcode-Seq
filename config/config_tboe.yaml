@@ -1,0 +1,22 @@
+# Global defaults
+threads: 8
+bin_size: 1
+output_dir: results
+# Set to the annotation GTF you want featureCounts to use
+gtf: data/genome_927/tb927.gtf
+
+# Samples block. Add entries per sample with method, barcodes and bam path.
+# - method: ritSeq (single barcode) or oeSeq (dual barcode)
+# - forward_barcode / reverse_barcode: barcode sequences in forward orientation
+# - merge_forward_reverse: only used for ritSeq (True to merge F and R into F_plus_R)
+
+# This is an example of TbOE sample configuration
+#for the ouptu files
+# the pair F/RR indicate a fragment on the same sence of the forward strand
+# the pair FR/R indicate a fragment on the same sence of the reverse strand
+samples:
+  TbOE8166H:
+    bam: data/TbOE8166H/TbOE8166H.picard.bam
+    method: oeSeq
+    forward_barcode: GATAGAGTGGTACCGGCCGG
+    reverse_barcode: CAATGATAGAGTGGCCGGCC
