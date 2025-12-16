@@ -1,9 +1,9 @@
 # myBarcode-seq Snakemake pipeline
 
-This workflow implements the two requested barcode-processing modes:
+This workflow implements two barcode-processing modes:
 
 - **ritSeq**: single barcode, optionally merges F/R (`barcode_type=1`).
-- **oeSeq**: dual barcodes for over-expression libraries (`barcode_type=2`).
+- **oeSeq**: dual barcodes for over-expression / cosmid libraries (`barcode_type=2`).
 
 ## Contents
 - `Snakefile` — workflow entrypoint.
@@ -36,7 +36,7 @@ Adjust `--cores` to match your machine. The workflow will:
 - FeatureCounts outputs both `*.counts.txt` and the accompanying `*.counts.txt.summary`.
 
 
-GCGGCCGCTCTAGAACTAGT
+Historical barcodes used:
 ```python
 barcode_dictionary ={
 	'ritSeqTb':{'f':'GCCTCGCGA', 'r':'TCGCGAGGC'},
