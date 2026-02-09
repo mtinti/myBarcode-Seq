@@ -13,10 +13,19 @@
 set -e
 set -u
 
+
+# --- Force Miniforge (base has snakemake) ---
+
+which conda
+which python
+which snakemake
+type -a conda
+
+
 # ── User-configurable variables ─────────────────────────────────
 CORES="${CORES:-40}"
 CONFIGFILE="${CONFIGFILE:-config/config.yaml}"
-CONDA_PREFIX="/cluster/majf_lab/mtinti/conda-envs"
+SNAKEMAKE_CONDA_PREFIX="/gpfs/uod-scale-01/cluster/majf_lab/mtinti/conda-envs"
 
 # ── Remember where we started (persistent storage) ──────────────
 PROJECT_DIR="$(pwd)"
@@ -29,9 +38,9 @@ cd "$TMPDIR/myBarcode-Seq"
 eval "$(conda shell.bash hook)"
 conda activate snakemake
 
-snakemake \
+/gpfs/uod-scale-01/cluster/majf_lab/mtinti/miniforge3/bin/snakemake \
   --use-conda \
-  --conda-prefix "$CONDA_PREFIX" \
+  --conda-prefix "$SNAKEMAKE_CONDA_PREFIX" \
   --cores "$CORES" \
   --configfile "$CONFIGFILE"
 
