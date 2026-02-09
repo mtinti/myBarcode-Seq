@@ -84,9 +84,11 @@ See `config/config_example.yaml` for the full format.
 
 ## 4) Submit the job
 
+Update the `submit_snakemake_cluster.sh` script with the path to your local snakemake conda env
+
 ```bash
 # 9. Submit the job with your custom config file
-CONFIGFILE=config/config_rit.yaml qsub submit_snakemake_cluster.sh
+SNAKEMAKE_CONDA_PREFIX="/gpfs/uod-scale-01/cluster/majf_lab/mtinti/conda-envs" CONFIGFILE=config/config_rit.yaml qsub submit_snakemake_cluster.sh
 ```
 
 To use the default `config/config.yaml` instead, simply run:
