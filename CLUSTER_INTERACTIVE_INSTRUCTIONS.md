@@ -70,15 +70,28 @@ data/genome_927/TriTrypDB-68_TbruceiTREU927.gtf
 
 ## 4) Create and edit the config file
 
+Start from `config/config_example.yaml`, which documents every available option.
+Example configs for common experiments are also provided:
+- `config/config_rit.yaml` — ritSeq (single barcode)
+- `config/config_tboe.yaml` — oeSeq (dual barcode, *T. brucei* overexpression)
+
+To create a new config from scratch:
+
 ```bash
 # 10. Make a copy of the example config
-cp config/config_example.yaml config/config_rit.yaml
+cp config/config_example.yaml config/config_myrun.yaml
+```
+
+Or start from one of the provided examples if it matches your experiment:
+
+```bash
+cp config/config_rit.yaml config/config_myrun.yaml
 ```
 
 This copy serves both as the configuration for your run and as a record of how
 the pipeline was executed.
 
-Edit `config/config_rit.yaml` and apply the following changes:
+Edit your config file and apply the following changes:
 
 ### a) Set the GTF annotation
 
