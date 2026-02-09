@@ -91,7 +91,7 @@ Update the `submit_snakemake_cluster.sh` script with the path to your local snak
 SNAKEMAKE_CONDA_PREFIX="/gpfs/uod-scale-01/cluster/majf_lab/mtinti/conda-envs" CONFIGFILE=config/config_rit.yaml qsub submit_snakemake_cluster.sh
 ```
 
-To use the default `config/config.yaml` instead, simply run:
+You can hard set this variables in submit_snakemake_cluster.sh instead, simply run:
 
 ```bash
 qsub submit_snakemake_cluster.sh
