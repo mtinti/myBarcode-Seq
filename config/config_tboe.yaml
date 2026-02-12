@@ -2,6 +2,7 @@
 threads: 8
 bin_size: 1
 output_dir: results
+singularity_image: "/cluster/majf_lab/mtinti/rna_seq.sif"
 # Set to the annotation GTF you want featureCounts to use
 gtf: data/genome_927/tb927.gtf
 

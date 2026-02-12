@@ -12,7 +12,7 @@ results back to persistent storage.
 The wrapper automatically handles:
 - Rsyncing the entire project to `$TMPDIR` (fast node-local scratch)
 - Activating the conda environment
-- Running Snakemake with `--use-conda` and `--conda-prefix` (persistent env storage)
+- Running Snakemake with `--use-conda`, `--use-singularity`, and `--conda-prefix` (persistent env storage)
 - Rsyncing results back to persistent storage when finished
 
 ## 1) Set up the environment (one-time)
@@ -82,13 +82,23 @@ gtf: data/genome_927/TriTrypDB-68_TbruceiTREU927.gtf
 Update the `samples:` block with your BAM paths, barcode sequences, and method.
 See `config/config_example.yaml` for the full format.
 
+### c) Set the Singularity image
+
+Ensure your config contains:
+
+```yaml
+singularity_image: "/cluster/majf_lab/mtinti/rna_seq.sif"
+```
+
+This is used by each rule via `singularity:` in the `Snakefile`.
+
 ## 4) Submit the job
 
 Update the `submit_snakemake_cluster.sh` script with the path to your local snakemake conda env
 
 ```bash
 # 9. Submit the job with your custom config file
-SNAKEMAKE_CONDA_PREFIX="/gpfs/uod-scale-01/cluster/majf_lab/mtinti/conda-envs" CONFIGFILE=config/config_rit.yaml qsub submit_snakemake_cluster.sh
+SNAKEMAKE_CONDA_PREFIX="/gpfs/uod-scale-01/cluster/majf_lab/mtinti/conda-envs" SINGULARITY_ARGS="--bind /cluster" CONFIGFILE=config/config_rit.yaml qsub submit_snakemake_cluster.sh
 ```
 
 You can hard set this variables in submit_snakemake_cluster.sh instead, simply run:
@@ -127,6 +137,8 @@ Contents of `results/`:
 - The wrapper script uses `--conda-prefix /cluster/majf_lab/mtinti/conda-envs`
   so that rule-level conda environments are stored on persistent lab storage.
   Snakemake creates them on the first run and reuses them on subsequent runs.
+- The wrapper also runs with `--use-singularity` and defaults to
+  `SINGULARITY_ARGS="--bind /cluster"` so the image can access lab paths.
 - `CONFIGFILE=config/config_rit.yaml qsub ...` sets an environment variable
   that the script reads via `${CONFIGFILE:-config/config.yaml}`. The `#$ -V`
   directive in the script exports all environment variables to the job, so the

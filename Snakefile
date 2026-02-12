@@ -19,6 +19,7 @@ BASE = f"{OUTPUT_DIR}" + "/{sample}/{sample}"
 THREADS = config.get("threads", 8)
 BIN_SIZE = config.get("bin_size", 1)
 GTF = config["gtf"]
+SINGULARITY_IMAGE = config.get("singularity_image", "")
 
 rit_samples = [s for s, meta in SAMPLES.items() if meta["method"] == "ritSeq"]
 oe_samples = [s for s, meta in SAMPLES.items() if meta["method"] == "oeSeq"]
@@ -91,6 +92,8 @@ rule sort_input:
     threads: THREADS
     conda:
         "workflow/envs/mybarcode.yaml"
+    singularity:
+        SINGULARITY_IMAGE
     shell:
         "samtools sort -@ {threads} -o {output.bam} {input.bam} > {log} 2>&1"
 
@@ -106,6 +109,8 @@ rule index_bam:
     threads: 1
     conda:
         "workflow/envs/mybarcode.yaml"
+    singularity:
+        SINGULARITY_IMAGE
     shell:
         "samtools index {input.bam} {output.bai} > {log} 2>&1"
 
@@ -121,6 +126,8 @@ rule sort_dedup_rit:
     threads: THREADS
     conda:
         "workflow/envs/mybarcode.yaml"
+    singularity:
+        SINGULARITY_IMAGE
     shell:
         "samtools sort -@ {threads} -o {output.bam} {input.bam} > {log} 2>&1"
 
@@ -136,6 +143,8 @@ rule filter_proper_pairs_rit:
     threads: THREADS
     conda:
         "workflow/envs/mybarcode.yaml"
+    singularity:
+        SINGULARITY_IMAGE
     shell:
         "samtools view -b -f 2 -@ {threads} -o {output.bam} {input.bam} > {log} 2>&1"
 
@@ -157,6 +166,8 @@ rule extract_barcodes_rit:
     threads: THREADS
     conda:
         "workflow/envs/mybarcode.yaml"
+    singularity:
+        SINGULARITY_IMAGE
     shell:
         "python workflow/scripts/extract_barcodes.py {input.bam} {params.f} {params.r} 1 {params.merge} > {log} 2>&1"
 
@@ -180,6 +191,8 @@ rule extract_barcodes_oe:
     threads: THREADS
     conda:
         "workflow/envs/mybarcode.yaml"
+    singularity:
+        SINGULARITY_IMAGE
     shell:
         "python workflow/scripts/extract_barcodes.py {input.bam} {params.f} {params.r} 2 > {log} 2>&1"
 
@@ -196,6 +209,8 @@ rule bam_coverage:
     threads: THREADS
     conda:
         "workflow/envs/mybarcode.yaml"
+    singularity:
+        SINGULARITY_IMAGE
     shell:
         "bamCoverage -bs {BIN_SIZE} -b {input.bam} -o {output.bw} -p {threads} > {log} 2>&1"
 
@@ -234,6 +249,8 @@ rule featurecounts:
     threads: THREADS
     conda:
         "workflow/envs/mybarcode.yaml"
+    singularity:
+        SINGULARITY_IMAGE
     shell:
         (
             "featureCounts -p -B -C -M -T {threads} "

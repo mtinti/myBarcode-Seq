@@ -112,6 +112,14 @@ gtf: data/genome_927/TriTrypDB-68_TbruceiTREU927.gtf
 Update the `samples:` block with your BAM paths, barcode sequences, and method.
 See `config/config_example.yaml` for the full format.
 
+### c) Set the Singularity image
+
+Ensure your config contains:
+
+```yaml
+singularity_image: "/cluster/majf_lab/mtinti/rna_seq.sif"
+```
+
 ## 5) rsync project to local scratch
 
 ```bash
@@ -131,6 +139,8 @@ conda activate snakemake
 # 14. Run Snakemake
 snakemake \
   --use-conda \
+  --use-singularity \
+  --singularity-args "--bind /cluster" \
   --conda-prefix /cluster/majf_lab/mtinti/conda-envs \
   --cores 40 \
   --configfile config/config_rit.yaml
@@ -155,6 +165,8 @@ rsync -a $TMPDIR/myBarcode-Seq/results/ /cluster/majf_lab/mtinti/myBarcode-Seq/r
   **single node**. Do not use Snakemake's cluster submission mode.
 - The pipeline uses a single conda environment (`workflow/envs/mybarcode.yaml`)
   containing samtools, pysam, deeptools, subread, biopython, and tqdm.
+- The workflow also supports Singularity per rule via `singularity_image` in
+  config and requires `--use-singularity` at runtime.
 - `--conda-prefix /cluster/majf_lab/mtinti/conda-envs` is critical: without it,
   Snakemake would store envs inside `$TMPDIR/.snakemake/conda/` and rebuild them
   every job.

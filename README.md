@@ -49,3 +49,16 @@ barcode_dictionary ={
     'PkCos' :{'f':'TAGGGATAACAGGGTAATT','r':'ATTCTCATGTTTGACCGCT'}
     }
 ```
+
+
+## Singularity + Conda plan
+A stepwise rollout plan is documented in `docs/SINGULARITY_CONDA_PLAN.md`.
+
+Config templates now include:
+
+```yaml
+singularity_image: "/cluster/majf_lab/mtinti/rna_seq.sif"
+```
+
+The `Snakefile` now reads this config key and applies it to each rule using
+`singularity:` while keeping existing `conda:` directives.
