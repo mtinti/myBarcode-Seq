@@ -27,6 +27,7 @@ CORES="${CORES:-40}"
 CONFIGFILE="${CONFIGFILE:-config/config.yaml}"
 SNAKEMAKE_CONDA_PREFIX="${SNAKEMAKE_CONDA_PREFIX:-/gpfs/uod-scale-01/cluster/majf_lab/mtinti/conda-envs}"
 SINGULARITY_ARGS="${SINGULARITY_ARGS:---bind /cluster}"
+USE_SINGULARITY="${USE_SINGULARITY:-1}"
 
 # ── Remember where we started (persistent storage) ──────────────
 PROJECT_DIR="$(pwd)"
@@ -39,13 +40,22 @@ cd "$TMPDIR/myBarcode-Seq"
 eval "$(conda shell.bash hook)"
 conda activate snakemake
 
-/gpfs/uod-scale-01/cluster/majf_lab/mtinti/miniforge3/bin/snakemake \
-  --use-conda \
-  --use-singularity \
-  --singularity-args "$SINGULARITY_ARGS" \
-  --conda-prefix "$SNAKEMAKE_CONDA_PREFIX" \
-  --cores "$CORES" \
+SNAKEMAKE_CMD=(
+  /gpfs/uod-scale-01/cluster/majf_lab/mtinti/miniforge3/bin/snakemake
+  --use-conda
+  --conda-prefix "$SNAKEMAKE_CONDA_PREFIX"
+  --cores "$CORES"
   --configfile "$CONFIGFILE"
+)
+
+if [ "$USE_SINGULARITY" = "1" ]; then
+  SNAKEMAKE_CMD+=(
+    --use-singularity
+    --singularity-args "$SINGULARITY_ARGS"
+  )
+fi
+
+"${SNAKEMAKE_CMD[@]}"
 
 # ── rsync results back to persistent storage ────────────────────
 rsync -a "$TMPDIR/myBarcode-Seq/results/" "$PROJECT_DIR/results/"

@@ -62,3 +62,11 @@ singularity_image: "/cluster/majf_lab/mtinti/rna_seq.sif"
 
 The `Snakefile` now reads this config key and applies it to each rule using
 `singularity:` while keeping existing `conda:` directives.
+
+
+### Why both `--use-conda` and `--use-singularity`?
+- `--use-conda` resolves rule software environments (`workflow/envs/mybarcode.yaml`).
+- `--use-singularity` runs each rule inside the configured image for runtime consistency.
+
+So they are complementary. If you prefer, you can run Conda-only by omitting
+`--use-singularity` (or setting `USE_SINGULARITY=0` in the cluster wrapper).

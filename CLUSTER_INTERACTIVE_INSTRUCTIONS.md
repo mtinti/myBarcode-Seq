@@ -136,11 +136,18 @@ cd $TMPDIR/myBarcode-Seq
 # 13. Activate conda
 conda activate snakemake
 
-# 14. Run Snakemake
+# 14. Run Snakemake (Conda + Singularity)
 snakemake \
   --use-conda \
   --use-singularity \
   --singularity-args "--bind /cluster" \
+  --conda-prefix /cluster/majf_lab/mtinti/conda-envs \
+  --cores 40 \
+  --configfile config/config_rit.yaml
+
+# Alternative: Conda-only (no Singularity)
+snakemake \
+  --use-conda \
   --conda-prefix /cluster/majf_lab/mtinti/conda-envs \
   --cores 40 \
   --configfile config/config_rit.yaml
@@ -165,8 +172,8 @@ rsync -a $TMPDIR/myBarcode-Seq/results/ /cluster/majf_lab/mtinti/myBarcode-Seq/r
   **single node**. Do not use Snakemake's cluster submission mode.
 - The pipeline uses a single conda environment (`workflow/envs/mybarcode.yaml`)
   containing samtools, pysam, deeptools, subread, biopython, and tqdm.
-- The workflow also supports Singularity per rule via `singularity_image` in
-  config and requires `--use-singularity` at runtime.
+- The workflow supports both modes: Conda-only, or Conda + Singularity
+  (using `singularity_image` from config when `--use-singularity` is set).
 - `--conda-prefix /cluster/majf_lab/mtinti/conda-envs` is critical: without it,
   Snakemake would store envs inside `$TMPDIR/.snakemake/conda/` and rebuild them
   every job.

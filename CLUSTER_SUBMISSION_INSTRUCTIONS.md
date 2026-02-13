@@ -12,7 +12,7 @@ results back to persistent storage.
 The wrapper automatically handles:
 - Rsyncing the entire project to `$TMPDIR` (fast node-local scratch)
 - Activating the conda environment
-- Running Snakemake with `--use-conda`, `--use-singularity`, and `--conda-prefix` (persistent env storage)
+- Running Snakemake with `--use-conda` (+ optional `--use-singularity`) and `--conda-prefix` (persistent env storage)
 - Rsyncing results back to persistent storage when finished
 
 ## 1) Set up the environment (one-time)
@@ -98,7 +98,13 @@ Update the `submit_snakemake_cluster.sh` script with the path to your local snak
 
 ```bash
 # 9. Submit the job with your custom config file
-SNAKEMAKE_CONDA_PREFIX="/gpfs/uod-scale-01/cluster/majf_lab/mtinti/conda-envs" SINGULARITY_ARGS="--bind /cluster" CONFIGFILE=config/config_rit.yaml qsub submit_snakemake_cluster.sh
+SNAKEMAKE_CONDA_PREFIX="/gpfs/uod-scale-01/cluster/majf_lab/mtinti/conda-envs" USE_SINGULARITY=1 SINGULARITY_ARGS="--bind /cluster" CONFIGFILE=config/config_rit.yaml qsub submit_snakemake_cluster.sh
+```
+
+To run without Singularity (Conda-only), set `USE_SINGULARITY=0`.
+
+```bash
+USE_SINGULARITY=0 CONFIGFILE=config/config_rit.yaml qsub submit_snakemake_cluster.sh
 ```
 
 You can hard set this variables in submit_snakemake_cluster.sh instead, simply run:
@@ -137,8 +143,9 @@ Contents of `results/`:
 - The wrapper script uses `--conda-prefix /cluster/majf_lab/mtinti/conda-envs`
   so that rule-level conda environments are stored on persistent lab storage.
   Snakemake creates them on the first run and reuses them on subsequent runs.
-- The wrapper also runs with `--use-singularity` and defaults to
-  `SINGULARITY_ARGS="--bind /cluster"` so the image can access lab paths.
+- By default the wrapper enables Singularity (`USE_SINGULARITY=1`) and
+  uses `SINGULARITY_ARGS="--bind /cluster"` so the image can access lab paths.
+  Set `USE_SINGULARITY=0` to run Conda-only.
 - `CONFIGFILE=config/config_rit.yaml qsub ...` sets an environment variable
   that the script reads via `${CONFIGFILE:-config/config.yaml}`. The `#$ -V`
   directive in the script exports all environment variables to the job, so the
