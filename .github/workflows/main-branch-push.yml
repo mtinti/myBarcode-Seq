@@ -1,0 +1,28 @@
+name: Main Branch - Push
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  snakemake-dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Miniforge and Snakemake
+        shell: bash -l {0}
+        run: |
+          wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+          bash Miniforge3.sh -b -p "${HOME}/conda"
+          source "${HOME}/conda/etc/profile.d/conda.sh"
+          conda create -y -c conda-forge -c bioconda -n snakemake snakemake
+
+      - name: Run Snakemake dry-run tests
+        shell: bash -l {0}
+        run: |
+          source "${HOME}/conda/etc/profile.d/conda.sh"
+          conda activate snakemake
+
+          snakemake --use-conda --cores 8 --dry-run --configfile test_data/test_oe/config_test.yaml
+          snakemake --use-conda --cores 8 --dry-run --configfile test_data/test_rit/config_test.yaml
