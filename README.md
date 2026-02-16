@@ -30,6 +30,16 @@ Adjust `--cores` to match your machine. The workflow will:
 - Build BAM/BAI and BigWig files via `bamCoverage`.
 - Run featureCounts with the same arguments you provided.
 
+## Test configurations
+Two lightweight test configurations are available under `test_data/`:
+
+```bash
+snakemake --use-conda --cores 8 --configfile test_data/test_oe/config_test.yaml
+snakemake --use-conda --cores 8 --configfile test_data/test_rit/config_test.yaml
+```
+
+These run the workflow against the `oeSeq` and `ritSeq` test datasets, respectively.
+
 ## Notes
 - The workflow assumes input BAMs exist at the paths listed in the config.
 - BigWigs use `bin_size` from the config (default 1).
