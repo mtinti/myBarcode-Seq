@@ -1,0 +1,3 @@
+Tb927_08_v5.1	VEuPathDB	transcript	272330	285554	.	-	.	transcript_id "Tb927.8.910:mRNA"; gene_id "Tb927.8.910";
+Tb927_08_v5.1	VEuPathDB	exon	272330	285554	.	-	.	transcript_id "Tb927.8.910:mRNA"; gene_id "Tb927.8.910";
+Tb927_08_v5.1	VEuPathDB	CDS	283743	285140	.	-	0	transcript_id "Tb927.8.910:mRNA"; gene_id "Tb927.8.910";
