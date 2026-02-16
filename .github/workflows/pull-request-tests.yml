@@ -29,5 +29,5 @@ jobs:
       - name: Show counts outputs
         shell: bash -l {0}
         run: |
-          cat test_oe/results/test_oe/test_oe.counts.tx
-          cat test_rit/results/test_rit/test_rit.counts.txt
+          cat test_data/test_oe/results/test_oe/test_oe.counts.txt
+          cat test_data/test_rit/results/test_rit/test_rit.counts.txt
