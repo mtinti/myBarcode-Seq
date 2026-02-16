@@ -11,7 +11,7 @@ gtf: test_data/test_rit/test.gtf
 # - merge_forward_reverse: only used for ritSeq (True to merge F and R into F_plus_R)
 #   as the same barcode is given in F and RC orientation
 samples:
-  TbRIT-8166:
+  test_rit:
     bam: test_data/test_rit/test_region.bam
     method: ritSeq
     forward_barcode: GCCTCGCGA
