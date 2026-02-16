@@ -1,0 +1,40 @@
+# Snakemake files
+.snakemake/
+*.snakemake.*
+
+# Results and logs
+results/
+logs/
+data/
+test_data/test_oe/results
+test_data/test_rit/results
+
+
+
+# Conda environments
+.conda/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+*.ipynb*
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
