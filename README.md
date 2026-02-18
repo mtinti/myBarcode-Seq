@@ -1,5 +1,7 @@
 # myBarcode-seq Snakemake pipeline
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18682390.svg)](https://doi.org/10.5281/zenodo.18682390)
+
 This workflow implements two barcode-processing modes:
 
 - **ritSeq**: single barcode, optionally merges F/R (`barcode_type=1`).
