@@ -1,0 +1,13 @@
+# Global defaults
+threads: 8
+bin_size: 1
+output_dir: results
+gtf: /cluster/majf_lab/mtinti/RNAseq/experiments/DH/Gustavo/F24A430002166_TRYtczxR/genomes/tb927_v68/tb927_v68.gtf
+
+samples:
+  WT.40.A:
+    bam: /cluster/majf_lab/mtinti/RNAseq/experiments/DH/Gustavo/F24A430002166_TRYtczxR/WT.40.A/res1/WT.40.A/WT.40.Asorted.bam
+    method: ritSeq
+    forward_barcode: TCTGTACTATATTGAG
+    reverse_barcode: CTCAATATAGTACAGA
+    merge_forward_reverse: true
